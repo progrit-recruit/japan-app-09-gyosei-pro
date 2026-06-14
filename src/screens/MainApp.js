@@ -12,18 +12,16 @@ import { colors, fontSizes, borderRadius } from '../theme';
 
 import LoginScreen from './LoginScreen';
 import DashboardScreen from './DashboardScreen';
-import IndividualRequestsScreen from './IndividualRequestsScreen';
-import CorporateRequestsScreen from './CorporateRequestsScreen';
-import ClientsScreen from './ClientsScreen';
+import CompanyListScreen from './CompanyListScreen';
+import CompanyDetailScreen from './CompanyDetailScreen';
+import EmployeeDetailScreen from './EmployeeDetailScreen';
 import SettingsScreen from './SettingsScreen';
 import RequestDetailScreen from './RequestDetailScreen';
 
 const TABS = [
-  { key: 'dashboard', icon: 'speedometer-outline' },
-  { key: 'individual_requests', icon: 'person-outline' },
-  { key: 'corporate_requests', icon: 'business-outline' },
-  { key: 'clients', icon: 'people-outline' },
-  { key: 'settings', icon: 'settings-outline' },
+  { key: 'dashboard', icon: 'speedometer-outline', label: 'ダッシュボード' },
+  { key: 'clients', icon: 'business-outline', label: '企業クライアント' },
+  { key: 'settings', icon: 'settings-outline', label: '設定' },
 ];
 
 export default function MainApp({ lang: initialLang }) {
@@ -67,12 +65,40 @@ export default function MainApp({ lang: initialLang }) {
   }
 
   // Overlay screens
-  if (currentScreen === 'requestDetail') {
+  if (currentScreen === 'RequestDetail' || currentScreen === 'requestDetail') {
+    const request = screenParams?.request || screenParams;
     return (
       <SafeAreaView style={styles.safeArea}>
         <RequestDetailScreen
           lang={lang}
-          request={screenParams}
+          request={request}
+          goBack={goBack}
+        />
+      </SafeAreaView>
+    );
+  }
+
+  if (currentScreen === 'EmployeeDetail') {
+    return (
+      <SafeAreaView style={styles.safeArea}>
+        <EmployeeDetailScreen
+          lang={lang}
+          employee={screenParams?.employee}
+          companyName={screenParams?.companyName}
+          navigate={navigate}
+          goBack={goBack}
+        />
+      </SafeAreaView>
+    );
+  }
+
+  if (currentScreen === 'CompanyDetail') {
+    return (
+      <SafeAreaView style={styles.safeArea}>
+        <CompanyDetailScreen
+          lang={lang}
+          company={screenParams?.company}
+          navigate={navigate}
           goBack={goBack}
         />
       </SafeAreaView>
@@ -83,12 +109,8 @@ export default function MainApp({ lang: initialLang }) {
     switch (currentTab) {
       case 'dashboard':
         return <DashboardScreen lang={lang} navigate={navigate} />;
-      case 'individual_requests':
-        return <IndividualRequestsScreen lang={lang} navigate={navigate} />;
-      case 'corporate_requests':
-        return <CorporateRequestsScreen lang={lang} navigate={navigate} />;
       case 'clients':
-        return <ClientsScreen lang={lang} navigate={navigate} />;
+        return <CompanyListScreen lang={lang} navigate={navigate} />;
       case 'settings':
         return <SettingsScreen lang={lang} setLang={setLang} onLogout={() => setIsLoggedIn(false)} />;
       default:
@@ -116,7 +138,7 @@ export default function MainApp({ lang: initialLang }) {
                   color={isActive ? colors.primary : colors.textLight}
                 />
                 <Text style={[styles.tabLabel, isActive && styles.tabLabelActive]}>
-                  {t(lang, tab.key)}
+                  {tab.label}
                 </Text>
                 {isActive && <View style={styles.activeIndicator} />}
               </TouchableOpacity>

@@ -122,6 +122,58 @@ export const individualRequests = [
   },
 ];
 
+export const companies = [
+  {
+    id: 1,
+    name: '株式会社サンプル製造',
+    industry: '製造業',
+    emoji: '🏭',
+    location: '愛知県名古屋市',
+    totalEmployees: 2,
+    pendingRequests: 1,
+    employees: [
+      { id: 101, name: 'Nguyen Van A', flag: '🇻🇳', nationality: 'ベトナム', visaType: '技能実習3号', requestIds: [101, 105] },
+      { id: 102, name: 'Wang Fang', flag: '🇨🇳', nationality: '中国', visaType: '特定技能1号', requestIds: [105] },
+    ],
+  },
+  {
+    id: 2,
+    name: 'グリーンファーム農場',
+    industry: '農業',
+    emoji: '🌾',
+    location: '北海道上富良野町',
+    totalEmployees: 1,
+    pendingRequests: 1,
+    employees: [
+      { id: 103, name: 'Thapa Ram', flag: '🇳🇵', nationality: 'ネパール', visaType: '技能実習2号', requestIds: [102] },
+    ],
+  },
+  {
+    id: 3,
+    name: 'みんなのキッチン株式会社',
+    industry: '飲食サービス',
+    emoji: '🍜',
+    location: '大阪府大阪市',
+    totalEmployees: 1,
+    pendingRequests: 1,
+    employees: [
+      { id: 104, name: 'Tran Thi B', flag: '🇻🇳', nationality: 'ベトナム', visaType: '特定技能1号', requestIds: [103] },
+    ],
+  },
+  {
+    id: 4,
+    name: 'テックソリューションズ',
+    industry: 'IT・技術',
+    emoji: '💻',
+    location: '東京都渋谷区',
+    totalEmployees: 1,
+    pendingRequests: 0,
+    employees: [
+      { id: 105, name: 'Kim Jihoon', flag: '🇰🇷', nationality: '韓国', visaType: '技術・人文知識・国際業務', requestIds: [104] },
+    ],
+  },
+];
+
 export const corporateRequests = [
   {
     id: 101,
