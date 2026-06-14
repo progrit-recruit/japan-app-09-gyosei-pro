@@ -9,9 +9,9 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { t } from '../i18n';
 import { colors, fontSizes, borderRadius, shadows, spacing } from '../theme';
-import { individualRequests, corporateRequests } from '../data/mockData';
+import { corporateRequests } from '../data/mockData';
 
-const allRequests = [...individualRequests, ...corporateRequests];
+const allRequests = [...corporateRequests];
 
 const statCards = [
   { key: 'new_request', count: 3, icon: 'mail-outline', color: colors.danger, bg: colors.dangerLight },
@@ -35,16 +35,6 @@ function StatusBadge({ status, lang }) {
   );
 }
 
-function SourceTag({ source, lang }) {
-  const isCorprate = source === 'corporate';
-  return (
-    <View style={[styles.sourceTag, { backgroundColor: isCorprate ? colors.primaryLight : colors.secondaryLight }]}>
-      <Text style={[styles.sourceTagText, { color: isCorprate ? colors.primary : colors.secondary }]}>
-        {isCorprate ? t(lang, 'corporate') : t(lang, 'individual')}
-      </Text>
-    </View>
-  );
-}
 
 export default function DashboardScreen({ lang, navigate }) {
   const urgentRequests = allRequests.filter(r => r.priority === 'urgent' && r.status !== 'completed');
@@ -112,7 +102,6 @@ export default function DashboardScreen({ lang, navigate }) {
                 <View style={styles.urgentBadge}>
                   <Text style={styles.urgentBadgeText}>{t(lang, 'urgent')}</Text>
                 </View>
-                <SourceTag source={req.source} lang={lang} />
               </View>
             </TouchableOpacity>
           ))}
@@ -136,11 +125,10 @@ export default function DashboardScreen({ lang, navigate }) {
               <View style={styles.requestInfo}>
                 <View style={styles.requestNameRow}>
                   <Text style={styles.requestName} numberOfLines={1}>
-                    {req.source === 'corporate' ? req.companyName : req.clientName}
+                    {req.companyName}
                   </Text>
-                  <SourceTag source={req.source} lang={lang} />
                 </View>
-                <Text style={styles.requestType} numberOfLines={1}>{req.requestType}</Text>
+                <Text style={styles.requestType} numberOfLines={1}>{req.employeeName} · {req.requestType}</Text>
               </View>
             </View>
             <View style={styles.requestCardBottom}>
@@ -344,15 +332,6 @@ const styles = StyleSheet.create({
   badgeText: {
     fontSize: fontSizes.xs,
     fontWeight: '600',
-  },
-  sourceTag: {
-    borderRadius: borderRadius.sm,
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-  },
-  sourceTagText: {
-    fontSize: fontSizes.xs,
-    fontWeight: '700',
   },
   urgentSmall: {
     backgroundColor: colors.danger,
